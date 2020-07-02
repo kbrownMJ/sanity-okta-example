@@ -70,7 +70,7 @@ router.post(
     // cookie, and also pass an origin param so the Sanity Cloud can redirect
     // them further (typically your studio URL)
     const claimUrl = `${user.endUserClaimUrl}?origin=${process.env.SANITY_STUDIO_URL}`;
-    res.redirect("/?redirect=" + encodeURIComponent(claimUrl));
+    res.redirect(claimUrl);
   }
 );
 
