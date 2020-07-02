@@ -3,7 +3,6 @@ import bodyParser from "body-parser";
 import serverless from "serverless-http";
 import passport from "passport";
 import { Strategy, Profile } from "passport-saml";
-import config from "./config";
 import { login, SanitySession } from "../sanitySession";
 
 // Make sure your SAML config on Okta returns these attributes see README.md for
@@ -24,9 +23,10 @@ router.use((req, _res, next) => {
     new Strategy(
       {
         path: `${host}/.netlify/functions/auth/saml/callback`,
-        entryPoint: config.entryPoint,
-        issuer: config.issuer,
-        cert: config.cert,
+        entryPoint: process.env.OKTA_ENTRYPOINT,
+        issuer: process.env.OKTA_ISSUER,
+        // Reconstitute newlines from our env variable certificate
+        cert: (process.env.OKTA_CERT || "").replace(/_/g, "\r\n"),
       },
       async (samlResponse: Profile, done: Function) =>
         login(samlResponse as OktaSamlProfile)

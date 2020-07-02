@@ -1,12 +1,16 @@
-import config from "./lambda/config";
-import { Profile } from "passport-saml";
 import sanityClient, { ClientConfig, SanityDocumentStub } from "@sanity/client";
-import fetch from "node-fetch";
+//import fetch from "node-fetch";
 import { OktaSamlProfile } from "./lambda/auth";
 
 const SESSION_LENGTH = 7 * 24 * 60 * 60 * 1000;
 
-const client = sanityClient(config.sanityClient as ClientConfig);
+const clientConfig = {
+  projectId: process.env.SANITY_PROJECT_ID,
+  dataset: process.env.SANITY_DATASET,
+  token: process.env.SANITY_TOKEN,
+} as ClientConfig;
+
+const client = sanityClient(clientConfig);
 
 export type SanityUserProfile = {
   userId: string;
@@ -176,13 +180,13 @@ export type SanitySession = {
 
 const createSession = async (user: SanityUserProfile): Promise<SanitySession> =>
   fetch(
-    `https://${config.sanityClient.projectId}.api.sanity.io/v1/auth/thirdParty/session`,
+    `https://${clientConfig.projectId}.api.sanity.io/v1/auth/thirdParty/session`,
     {
       method: "POST",
       body: JSON.stringify(user),
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${config.sanityClient.token}`,
+        Authorization: `Bearer ${clientConfig.token}`,
       },
     }
   ).then((res) => res.json());
