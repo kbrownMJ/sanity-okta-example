@@ -46,7 +46,7 @@ On the next page you will set up the SAML Settings:
 
 http://localhost:8888/.netlify/functions/auth/saml/callback
 
-(If you are deploying this app to netlify you will use your netlify deploy host here instead of localhost:8888. You can change this later after testing locally.
+(If you are deploying this app to netlify you will use your netlify deploy host here instead of localhost:8888. You can change this later after testing locally.)
 
 - Audience URI (SP Entity ID)
 
@@ -56,7 +56,7 @@ Pick a string like `sanity-okta-sso`
 
 Can be set to Okta username.
 
-- Attribute statements. Fill out as according to the screenshot. This provides us with the user and group information we need in the SAML response.
+- Attribute statements. Fill out as according to the screenshot. This provides the app with the user and group information needed in the SAML response from Okta. Notice we have set a regex to avoid the Everyone group here, so it is not synced to Sanity. You may of course modify this to suit your use case.
 
 <img width="592" alt="samlsettings" src="https://user-images.githubusercontent.com/38528/86351290-4fcfee80-bc64-11ea-8e0f-6def80b1a51c.png">
 
@@ -80,7 +80,7 @@ Then go back and to the "General Settings" tab and scroll down to find the "App 
 
 <img width="750" alt="appEmbedlink" src="https://user-images.githubusercontent.com/38528/86342219-98cd7600-bc57-11ea-8afb-83567abec56d.png">
 
-And you are done with the setup on Okta. Futher actions here would be normal managing of users and their groups. Notice we have set a regex to avoid the Everyone group here, so it is not synced to Sanity. You may of course modify this to suit your use case.
+And you are done with the setup on Okta. Futher actions here would be normal managing of users and their groups.
 
 ### Netlify
 
@@ -110,7 +110,7 @@ Then go to [https://app.netlify.com/](https://app.netlify.com/) and navigate to 
   - The "Create Session" token you created earlier
 
 - OKTA_CERT
-  - Here you will need to take the certificate you previously downloaded, then _replace the newlines with underscores_ (\*), since env variables do not support line breaks.
+  - Here you will need to take the certificate you previously downloaded, then _replace the newlines with underscores_ (\_), since env variables do not support line breaks.
 - OKTA_ENTRYPOINT
   - This is the "Identity Provider Single Sign-On URL" you got from Okta
 - OKTA_ISSUER
@@ -152,6 +152,11 @@ Run your Studio locally (if you are not testing this with a hosted Studio) with 
 To deploy this login flow you'll need to replace the configured URLs on Okta and Netlify from localhost:8888 to where this app deploys, typically a Netlify app url you can find on Netlify.com. The actualy deployment happens with `netlify deploy`.
 
 ## Possible improvements
+
+### React SPA
+The current React SPA does nothing except trigger the login flow via a link if you go to it directly. It should be expanded to include information about failed login flows and better feedback while logging into the Sanity Cloud.
+
+### Okta Event notification hook
 
 Okta lets you set up an [event notification webhook](https://developer.okta.com/docs/concepts/event-hooks/). With this you can get notified when relevant events occur, (such as user added to or removed from the app, group membership changes) and then mutate the access control documents in your Sanity dataset accordingly, without waiting for the user to actually log in first.
 
