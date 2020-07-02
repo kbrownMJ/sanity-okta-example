@@ -1,5 +1,5 @@
 import sanityClient, { ClientConfig, SanityDocumentStub } from "@sanity/client";
-import fetch from "node-fetch";
+import fetch from "isomorphic-fetch";
 import { OktaSamlProfile } from "./lambda/auth";
 
 const SESSION_LENGTH = 7 * 24 * 60 * 60 * 1000;
