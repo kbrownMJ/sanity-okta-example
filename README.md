@@ -2,7 +2,7 @@
 
 ## What it is
 
-This is an example showing how you can log in users to Sanity using [Okta](https://okta.com) with SAML 2.0, and assign them to custom access control groups in Sanity depending on their group membership in Okta. This application is meant to be hosted on [Netlify](https://netlify.com), but you may of course modify it to work on any serverless hosting platform, or adapt it to run on your own infrastructure. In essence it is simply a Node.js Express app utilizing [passport](http://www.passportjs.org/) for the authentication flow, found in [src/lambda/auth.ts](src/lambda/auth.ts) and communication with Sanity happens in [src/sanitySession.ts ](src/sanitySession.ts ).
+This is an example showing how you can log in users to Sanity using [Okta](https://okta.com) with SAML 2.0, and assign them to custom access control groups in Sanity depending on their group membership in Okta. This application is meant to be hosted on [Netlify](https://netlify.com), but you may of course modify it to work on any serverless hosting platform, or adapt it to run on your own infrastructure. In essence it is simply a Node.js Express app utilizing [passport](http://www.passportjs.org/) for the authentication flow, found in [src/lambda/auth.ts](src/lambda/auth.ts) and communication with Sanity happens in [src/sanitySession.ts](src/sanitySession.ts).
 
 ## Components
 
@@ -28,7 +28,7 @@ In order to create and mutate access groups, and to create thirdparty sessions y
 
 This application will create new groups it sees when a user logs in. These group will by default not have any grants. Therefore you will need to manage the `grants` array of these groups to ensure that the group corresponds to the permissions you would like to give to that group of user. Adding or changing the grants for a group works in the same way as creating them, using the `sanityClient` to change the documents. For more information on how the grants work, see the [access control documentation](https://www.sanity.io/docs/access-control)
 
-Certain access group names are reserved in Sanity, so if you have corresponding group names in Okta, they will not be synced on login. See (src/sanitySession.ts)[src/sanitySession.ts] for a list.
+Certain access group names are reserved in Sanity, so if you have corresponding group names in Okta, they will not be synced on login. See [src/sanitySession.ts](src/sanitySession.ts) for a list.
 
 Authentication failures or other errors are not currently handled.
 
