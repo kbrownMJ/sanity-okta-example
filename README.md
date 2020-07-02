@@ -28,6 +28,8 @@ In order to create and mutate access groups, and to create thirdparty sessions y
 
 This application will create new groups it sees when a user logs in. These group will by default not have any grants. Therefore you will need to manage the `grants` array of these groups to ensure that the group corresponds to the permissions you would like to give to that group of user. Adding or changing the grants for a group works in the same way as creating them, using the `sanityClient` to change the documents. For more information on how the grants work, see the [access control documentation](https://www.sanity.io/docs/access-control)
 
+Certain access group names are reserved in Sanity, so if you have corresponding group names in Okta, they will not be synced on login. See (src/sanitySession.ts)[src/sanitySession.ts] for a list.
+
 Authentication failures or other errors are not currently handled.
 
 ## Setup
@@ -78,7 +80,7 @@ Then go back and to the "General Settings" tab and scroll down to find the "App 
 
 <img width="750" alt="appEmbedlink" src="https://user-images.githubusercontent.com/38528/86342219-98cd7600-bc57-11ea-8afb-83567abec56d.png">
 
-And you are done with the setup on Okta. Futher actions here would be normal managing of users and their groups. Notice we have set a regex to avoid the Everyone group here, so it is not synced to Sanity. `everyone` is an internal Sanity group you cannot modify, and corresponds to the users added in the Sanity Identity Provider, so we just ignore it here.
+And you are done with the setup on Okta. Futher actions here would be normal managing of users and their groups. Notice we have set a regex to avoid the Everyone group here, so it is not synced to Sanity. You may of course modify this to suit your use case.
 
 ### Netlify
 
