@@ -8,6 +8,7 @@ const clientConfig = {
   projectId: process.env.SANITY_PROJECT_ID,
   dataset: process.env.SANITY_DATASET,
   token: process.env.SANITY_TOKEN,
+  useCdn: false,
 } as ClientConfig;
 
 const client = sanityClient(clientConfig);
